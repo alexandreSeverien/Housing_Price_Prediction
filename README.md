@@ -18,5 +18,9 @@ Insights:
 * The Random Forest Regression model performed the best with an MAE of 17775.56448
 * Further improvements could be made by exploring more advanced feature engineering techniques and ensemble methods.
 
-You can find my current score in the leaderboard by typing my name : Alexandre Severien# Housing_Price_Prediction
+You can find my current score in the leaderboard by typing my name : Alexandre Severien
+
+------------
+
+ # Housing_Price_Prediction
 Python code for participating in the Kaggle competition "House Prices for Kaggle Learn Users" aiming to predict house prices based on various descriptive variables.
