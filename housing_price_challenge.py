@@ -15,7 +15,7 @@ file_path = './train.csv'
 df = pd.read_csv(file_path)
 
 
-##### X and y selection for first model
+##### X and y selection for first model (I am using a list of features obtained from Kaggle that are error-free. )
 
 
 list_disorganized = "'MSSubClass' 'LotArea' 'OverallQual' 'OverallCond' 'YearBuilt' 'YearRemodAdd' '1stFlrSF' '2ndFlrSF' 'LowQualFinSF' 'GrLivArea' 'FullBath' 'HalfBath' 'BedroomAbvGr' 'KitchenAbvGr' 'TotRmsAbvGrd' 'Fireplaces' 'WoodDeckSF' 'OpenPorchSF' 'EnclosedPorch' '3SsnPorch' 'ScreenPorch' 'PoolArea' 'MiscVal' 'MoSold' 'YrSold'"
@@ -30,9 +30,24 @@ X_all_features = df[features]
 
 y = df['SalePrice']
 
-###### Get Mean Absolute Error function
+##### Get Mean Absolute Error function
 
 def get_mae(X, y):
+    '''Calculate the Mean Absolute Error (MAE) for a random forest regression model.
+
+    Parameters
+    ----------
+    X : array-like, shape (n_samples, n_features)
+        Training data.
+
+    y : array-like, shape (n_samples,)
+        Target values.
+
+    Returns
+    -------
+    float
+        The Mean Absolute Error (MAE) between the validation target values and the model predictions.
+    '''
     train_X, val_X, train_y, val_y = train_test_split(X, y, random_state= 1)
     test_model = RandomForestRegressor(random_state= 1)
     test_model.fit(train_X, train_y)
@@ -52,7 +67,7 @@ all_features_model.fit(X_all_features, y)
 
 print(mae_all_features)
 
-###### feature importance
+##### feature importance method
 
 # Get an array with all the features importances with the features_importances_ method
 importances_num = all_features_model.feature_importances_
@@ -62,12 +77,26 @@ importances = list(zip(features, importances_num))
 
 # Get my list of feature importances in a descending order
 def get_second_element(x):
+    '''Return the second element of the given list or tuple.
+
+    Parameters
+    ----------
+    x : list or tuple
+        The input list or tuple.
+
+    Returns
+    -------
+    object
+        The second element of the input list or tuple.
+
+    '''
     return x[1]
 
 importances.sort(key= get_second_element, reverse= True)
 
 n_features = len(features)
 
+# Select the top `n_features` features based on their importances
 selected_features = [feature for feature, _ in importances[:n_features]]
 
 # Get a list of the mae with n most important features with different numbers of features
